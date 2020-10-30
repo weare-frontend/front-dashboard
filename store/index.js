@@ -110,7 +110,7 @@ export const actions = {
     const { data } = await this.$axios.$get(API_URL + '/api/get-promotion/special')
     const promotionArray = await _.map(data, (item) => {
       item.status = Number(item.status)
-      item.img_banner = process.env.API + 'backend/web/special_promotions/' + item.img_banner
+      item.img_banner = API_URL + 'backend/web/special_promotions/' + item.img_banner
       return item
     })
     console.log('>>>> API: [IN GET_SPECIAL] ', process.env.API)
