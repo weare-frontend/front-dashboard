@@ -157,18 +157,21 @@ export default {
   computed: {
     ...mapGetters(["getThemeObject", "getSettingObject"]),
   },
-  components:{
-    FacebookAuthV2
+  components: {
+    FacebookAuthV2,
   },
   layout: "login",
   auth: "guest",
-  asyncData: async function ({ route }) {
+  asyncData: async function ({ route, $config }) {
+    console.log("In asyncData: ", $config);
     return {
       username: route.query.username,
       password: route.query.password,
     };
   },
   created: async function () {
+    console.log(">>>> SITE_NAME: [IN Created Login][$config] ", this.$config);
+    console.log(">>>> SITE_NAME: [IN Created Login] ", process.env.SITE_NAME);
     if (this.$route.query.friendshipid) {
       this.$cookies.set("friendship", this.$route.query.friendshipid, {
         maxAge: 82800,
@@ -264,22 +267,26 @@ export default {
       }, 1200);
     },
     webFront: function () {
-            window.location.replace(this.getSettingObject.link_front);
-        },
+      window.location.replace(this.getSettingObject.link_front);
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .wrapper {
-    background: #1e7773;
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, #1e7773), color-stop(100%, #1e7773));
-    background: linear-gradient(to bottom, #1e7773 0%, #1e7773 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#1e7773', endColorstr='#1e7773', GradientType=0);
-    background-attachment: fixed;
-    background-position: center top;
-    background-size: 100% 100%;
+  background: #1e7773;
+  background: -webkit-gradient(
+    left top,
+    left bottom,
+    color-stop(0%, #1e7773),
+    color-stop(100%, #1e7773)
+  );
+  background: linear-gradient(to bottom, #1e7773 0%, #1e7773 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#1e7773', endColorstr='#1e7773', GradientType=0);
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: 100% 100%;
 }
 .border-1 {
   border: solid 1px #fff;
@@ -299,7 +306,7 @@ export default {
 .broder-1 {
   border: solid 1px #ccc;
 }
-hr.or{
+hr.or {
   border: 0.5px solid #ccc;
 }
 </style>

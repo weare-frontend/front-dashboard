@@ -173,6 +173,7 @@ module.exports = {
     '@nuxtjs/device',
     'cookie-universal-nuxt',
     '@nuxtjs/gtm',
+    '@nuxtjs/pwa',
     // 'nuxt-i18n',
     // {
     //     locales: ['en', 'es'],
@@ -284,4 +285,18 @@ module.exports = {
     // host: '0.0.0.0', // default: localhost
   },
   telemetry: false,
+  publicRuntimeConfig: {
+    XX: '1234',
+    API: process.env.API,
+  },
+  privateRuntimeConfig: {
+    XX: '5678',
+    YY: 'abcd',
+  },
+  manifest: {
+    name: 'Front Dashboard PWA',
+    short_name: 'Front-Dashboard ',
+    lang: 'en',
+    display: 'standalone',
+  },
 }

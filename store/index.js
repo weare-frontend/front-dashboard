@@ -64,6 +64,10 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ dispatch, commit, state }, { req }) {
     // Get session ID:
+    console.log('>>>> API_URL: [IN nuxtServerInit] ', API_URL)
+    console.log('>>>> API: [IN nuxtServerInit] ', process.env.API)
+    console.log('>>>> _API: [IN nuxtServerInit] ', process.env._API)
+    console.log('>>>> SITE_NAME: [IN nuxtServerInit] ', process.env.SITE_NAME)
     commit('SET_APP_VERSION', process.env.APP_VERSION)
     const { version } = await this.$axios.$get(API_URL + '/api/get-version')
     await dispatch('GET_SPECIAL')
@@ -109,6 +113,8 @@ export const actions = {
       item.img_banner = process.env.API + 'backend/web/special_promotions/' + item.img_banner
       return item
     })
+    console.log('>>>> API: [IN GET_SPECIAL] ', process.env.API)
+    console.log('>>>> SITE_NAME: [IN GET_SPECIAL] ', process.env.SITE_NAME)
     commit('SET_PROMOTIONS', promotionArray)
   },
 }

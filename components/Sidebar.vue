@@ -118,33 +118,36 @@
 <script>
 export default {
   computed: {
-    linkLine: function(params) {
+    linkLine: function (params) {
       return "http://line.me/ti/p/" + this.$auth.user.line_agent;
     },
-    getSettingObject: function() {
+    getSettingObject: function () {
       return this.$store.getters.getSettingObject;
     },
-    getThemeObjectBackground: function() {
+    getThemeObjectBackground: function () {
       return this.$store.getters.getThemeObjectBackground;
-    }
+    },
   },
   methods: {
-    userLogout: async function() {
+    userLogout: async function () {
       this.$nuxt.$loading.start();
       this.$toast.global.success({
-        message: "ออกจากระบบสำเร็จแล้ว"
+        message: "ออกจากระบบสำเร็จแล้ว",
       });
       this.$auth.logout();
-      setTimeout(() => {
+      if (
+        this.getSettingObject.link_front &&
+        !this.getSettingObject.link_front.includes("localhost")
+      ) {
         window.location.replace(this.getSettingObject.link_front);
-      }, 1000);
-    }
+      }
+    },
     // setThemeColor: async function(color) {
     //   await this.$store.dispatch("SET_THEME_COLOR", color);
     // },
     // setThemeBackground: async function(e) {
     //   await this.$store.dispatch("SET_THEME_BACKGROUND", e.target.value);
     // }
-  }
+  },
 };
 </script>
