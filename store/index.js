@@ -9,6 +9,7 @@ export const state = () => ({
     color: null,
     background: null,
   },
+  env: null,
 })
 
 const API_URL = process.env.API + 'backend'
@@ -31,6 +32,9 @@ export const mutations = {
   },
   SET_THEME_BACKGROUND(state, background) {
     state.themeObject.background = background
+  },
+  SET_ENV(state, env) {
+    state.env = { ...env }
   },
 }
 
@@ -59,6 +63,9 @@ export const getters = {
   getThemeObjectBackground(state) {
     return state.themeObject.background
   },
+  getENV(state) {
+    return state.env
+  },
 }
 
 export const actions = {
@@ -68,6 +75,9 @@ export const actions = {
     console.log('>>>> API: [IN nuxtServerInit] ', process.env.API)
     console.log('>>>> _API: [IN nuxtServerInit] ', process.env._API)
     console.log('>>>> SITE_NAME: [IN nuxtServerInit] ', process.env.SITE_NAME)
+    commit('SET_ENV', {
+      api_url: process.env.API,
+    })
     commit('SET_APP_VERSION', process.env.APP_VERSION)
     const { version } = await this.$axios.$get(API_URL + '/api/get-version')
     await dispatch('GET_SPECIAL')
@@ -97,23 +107,24 @@ export const actions = {
     this.$cookies.set('theme-background', background)
     commit('SET_THEME_BACKGROUND', background)
   },
-  async GET_THEMES({ commit }) {
+  async GET_THEMES({ commit, getters }) {
     const { theme, data, link_front } = await this.$axios.$get(API_URL + '/api/get-setting')
     const themeArray = await _.map(theme, (item) => {
-      item.img = process.env.API + 'backend/web/themes/' + item.img
+      item.img = getters.getENV.api_url + 'backend/web/themes/' + item.img
       return item
     })
     commit('SET_THEME', themeArray)
     commit('SET_SETTING', { ...data, link_front })
   },
-  async GET_SPECIAL({ commit }) {
+  async GET_SPECIAL({ commit, getters }) {
     const { data } = await this.$axios.$get(API_URL + '/api/get-promotion/special')
     const promotionArray = await _.map(data, (item) => {
       item.status = Number(item.status)
-      item.img_banner = API_URL + 'backend/web/special_promotions/' + item.img_banner
+      item.img_banner = getters.getENV.api_url + 'backend/web/special_promotions/' + item.img_banner
       return item
     })
     console.log('>>>> API: [IN GET_SPECIAL] ', process.env.API)
+    console.log('>>>> getters: [IN GET_SPECIAL] ', getters.getENV.api_url)
     console.log('>>>> SITE_NAME: [IN GET_SPECIAL] ', process.env.SITE_NAME)
     commit('SET_PROMOTIONS', promotionArray)
   },

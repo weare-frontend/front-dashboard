@@ -32,39 +32,44 @@
 
 <style>
 .x-ocean-contact-us {
-    z-index: 999;
-    right: 0;
-    position: absolute;
-    border-top: solid 2px #fff;
-    width: 65px; top: 70px;
-    font-size: 12px;
-    padding: 4px 0 4px 18px;
-    background:hsl(0deg 0% 4% / 37%);
-    border-top-left-radius: 24px;
-    border-bottom-left-radius: 24px;
+  z-index: 999;
+  right: 0;
+  position: absolute;
+  border-top: solid 2px #fff;
+  width: 65px;
+  top: 70px;
+  font-size: 12px;
+  padding: 4px 0 4px 18px;
+  background: hsl(0deg 0% 4% / 37%);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
 }
 .text-shape {
   font-weight: lighter;
 }
 .input-group-text {
-    padding: .375rem .2rem;
-    background-color: #ffff;
+  padding: 0.375rem 0.2rem;
+  background-color: #ffff;
 }
-.dot{
-  width: 15px;height: 15px; border-radius: 50%;
-  position: absolute; left:6px; margin-top: 1px;
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  left: 6px;
+  margin-top: 1px;
   filter: drop-shadow(0px 1px 2px #000);
 }
-.col-user{
+.col-user {
   align-items: center;
   font-size: 3vw;
-  white-space:nowrap;
-  margin-right:10px;
+  white-space: nowrap;
+  margin-right: 10px;
 }
 /* .col-user i{
   font-size: 18px;
 } */
-.font-size-22{
+.font-size-22 {
   font-size: 32px;
 }
 .marquees-text {
@@ -182,9 +187,12 @@ export default {
         message: "ออกจากระบบสำเร็จแล้ว",
       });
       this.$auth.logout();
-      setTimeout(() => {
+      if (
+        this.getSettingObject.link_front &&
+        !this.getSettingObject.link_front.includes("localhost")
+      ) {
         window.location.replace(this.getSettingObject.link_front);
-      }, 1000);
+      }
     },
   },
 };
