@@ -5,10 +5,11 @@
   "author": "lava",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
-    "dev2": "nuxt dev --dotenv .env",
+    "dev": "nuxt dev --dotenv .env",
+    "start": "nuxt start",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "dev-node": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "start-node": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate"
   },
   "dependencies": {
